@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import icon from "./photos/weather-icon.png";
-import openImage from "./photos/react+weather.png"
 import axios from 'axios';
 
 function App() {
@@ -9,7 +8,8 @@ function App() {
   const apiKey = "f56f24967aaf51182d1d4df628297c6d";
   const [data, setData] = useState({});
   const [city, setCity] = useState("");
-
+  const [selectedUnit, setSelectedUnit] = useState('°C'); // Default unit is Celsius
+  const [temperature, setTemperature] = useState(0);
 
   const getWeatherDetails = (cityName) => {
     if (!cityName) return
@@ -18,6 +18,8 @@ function App() {
       .then((res) => {
         console.log("response", res.data);
         setData(res.data) //to save the data using useState
+        const newTemperature = ((res.data?.main?.temp) - 273.15).toFixed(2);
+        setTemperature(newTemperature);
       })
       .catch((err) => {
         console.log("error", err)
@@ -27,6 +29,18 @@ function App() {
   const handleSearch = () => {
     getWeatherDetails(city);
   }
+
+  const handleUnitChange = (event) => {
+    const newUnit = event.target.value;
+    if (newUnit === '°C') {
+      setTemperature(((data?.main?.temp) - 273.15).toFixed(2));
+    } else if (newUnit === '°F') {
+      setTemperature((((data?.main?.temp) - 273.15) * 9 / 5 + 32).toFixed(2));
+    } else if (newUnit === 'K') {
+      setTemperature((data?.main?.temp).toFixed(2));
+    }
+    setSelectedUnit(newUnit);
+  };
 
 
   return (
@@ -40,20 +54,32 @@ function App() {
       {Object.keys(data).length <= 0 &&
         <div className='rainbow-background flex justify-center items-center'>
           <p className='text-6xl font-semibold md:font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-600 via-yellow-400 to-purple-600'>
-          Please enter a valid city name
+            Please enter a valid city name
           </p>
         </div>
       }
 
       {Object.keys(data).length > 0 &&
-        <div className='bottom rainbow-background flex flex-col  items-center'>
-          <div className='mt-4 shadow-2xl rounded-md p-5 px-10 md:h-[45vh] md:w-[40%] flex flex-col justify-center items-center'>
+        <div className='bottom rainbow-background flex flex-col items-center'>
+          <div className='mt-4 shadow-2xl rounded-md p-5 px-10  flex flex-col justify-center items-center'>
             <img src={icon} alt='weather-app' className='rounded-3xl h-[115px] w-[150px] md:h-[150px] md:w-[200px]'></img>
             <h2 className='text-5xl font-medium text-slate-950'>{data?.name}</h2>
-            <p className='mt-1 text-6xl font-semibold md:font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-yellow-400 to-green-500'>{((data?.main?.temp) - 273.15).toFixed(2)}°C</p>
+
+            <div className='mt-2 md:mt-4 flex gap-3 md:gap-5'>
+            <p className='text-3xl lg:text-5xl font-semibold md:font-bold text-slate-950'>{temperature} {selectedUnit}</p>
+
+              <select className="p-1 px-2 rounded-md bg-slate-300" onChange={handleUnitChange} value={selectedUnit}>
+              <option value="°C">Celsius</option>
+              <option value="°F">Fahrenheit</option>
+              <option value="K">Kelvin</option>
+            </select>
+            
+            </div>
+            
           </div>
         </div>
       }
+
 
     </>
   );

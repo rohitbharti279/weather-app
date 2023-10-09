@@ -4,5 +4,9 @@
   background-size: 100% 50vh;
   background-repeat: no-repeat;
   height: 50vh;
-  
+}
+
+.rainbow-background {
+  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  height: 50vh;
 }

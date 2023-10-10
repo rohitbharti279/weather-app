@@ -1,6 +1,6 @@
 .top {
-  /* background: url("../public/photos/pexels-pixabay-36717.jpg"); */
-  background: url("./photos/pexels-johannes-plenio-1118873.jpg");
+  background: url("./photos/pexels-pixabay-36717.jpg");
+  /* background: url("./photos/pexels-johannes-plenio-1118873.jpg"); */
   background-size: 100% 50vh;
   background-repeat: no-repeat;
   height: 50vh;
@@ -9,4 +9,12 @@
 .rainbow-background {
   background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
   height: 50vh;
+}
+
+.thermometer {
+  background-color: #ccc;
+  width: 30px;
+  height: 200px;
+  border-radius: 5px;
+  position: relative;
 }

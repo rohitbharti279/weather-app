@@ -7,10 +7,12 @@ Interactive UI with live updates
 Visual representation of temperature using a thermometer graphic
 Responsive design for various screen sizes
 Styled with Tailwind CSS for efficient and responsive UI development
+
 Technologies Used:
 React (JavaScript library for building user interfaces)
 Axios (Promise-based HTTP client for making API requests)
 Tailwind CSS (A utility-first CSS framework for rapidly building custom designs)
+
 How to Use:
 Clone the repository.
 Install dependencies with 'npm install'.
